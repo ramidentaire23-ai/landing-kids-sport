@@ -75,7 +75,7 @@
       }).catch(() => {});
   </script>
 </head>
-<body class="antialiased pb-10 selection:bg-orange-500 selection:text-white">
+<body class="antialiased pb-28 md:pb-24 selection:bg-orange-500 selection:text-white">
 
   <!-- 1. شريط إشعار الشحن السريع في الأعلى -->
   <header class="bg-brand-navy text-white text-xs md:text-sm font-bold py-2 px-4 text-center sticky top-0 z-50 shadow-md">
@@ -446,6 +446,20 @@
 
   </main>
 
+  <!-- شريط الطلب العائم الثابت أسفل الشاشة (Sticky Order CTA) -->
+  <div id="stickyCtaBar" class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_25px_rgba(0,0,0,0.12)] py-2.5 px-4 transition-all duration-300 transform translate-y-0">
+    <div class="max-w-xl mx-auto flex items-center justify-between gap-3">
+      <div class="text-right">
+        <span class="text-[10px] md:text-[11px] font-extrabold text-slate-500 block leading-tight">المبلغ الإجمالي :</span>
+        <span id="stickyBarPrice" class="text-lg md:text-xl font-black text-brand-orange price-num leading-tight">2,900 دج</span>
+      </div>
+      <button type="button" id="stickyCtaBtn" class="flex-1 bg-brand-orange hover:bg-brand-orangeHover text-white py-3 px-5 rounded-2xl shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 transition active:scale-95">
+        <span class="text-lg md:text-xl font-black tracking-wide">أطلب الآن</span>
+        <span class="text-[11px] font-bold text-orange-100 hidden sm:inline">— الدفع عند الاستلام ⚡</span>
+      </button>
+    </div>
+  </div>
+
   <!-- برمجة جافاسكريبت التفاعلية بالكامل -->
   <script>
     let deliveryData = { wilayas: [], desks: {} };
@@ -705,14 +719,23 @@
     });
 
     function updateRecapTotal() {
-      if (!selectedWilaya) return;
+      const productTotal = currentQuantity * PRIX_UNITAIRE;
+      const stickyPrice = document.getElementById('stickyBarPrice');
+
+      if (!selectedWilaya) {
+        recapTotal.textContent = `${productTotal.toLocaleString('fr-FR')} دج`;
+        if (stickyPrice) stickyPrice.textContent = `${productTotal.toLocaleString('fr-FR')} دج`;
+        return;
+      }
+
       const deliveryFee = currentDeliveryMode === 'home' 
         ? selectedWilaya.tarif_domicile 
         : selectedWilaya.tarif_stopdesk;
 
       recapLivraison.textContent = `${deliveryFee} دج`;
-      const total = (currentQuantity * PRIX_UNITAIRE) + deliveryFee;
+      const total = productTotal + deliveryFee;
       recapTotal.textContent = `${total.toLocaleString('fr-FR')} دج`;
+      if (stickyPrice) stickyPrice.textContent = `${total.toLocaleString('fr-FR')} دج`;
     }
 
     // 6. تتبع InitiateCheckout
@@ -834,6 +857,39 @@
         formErrorMessage.classList.remove('hidden');
       }
     });
+
+    // 9. تفاعل زر وشريط الطلب العائم الثابت (Sticky CTA Bar)
+    const stickyCtaBtn = document.getElementById('stickyCtaBtn');
+    const stickyBarEl = document.getElementById('stickyCtaBar');
+
+    if (stickyCtaBtn) {
+      stickyCtaBtn.addEventListener('click', () => {
+        const formSection = document.getElementById('commande-section');
+        if (formSection) {
+          formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => {
+            const firstEmptyInput = document.getElementById('client') || document.getElementById('phone');
+            if (firstEmptyInput) firstEmptyInput.focus();
+          }, 350);
+        }
+      });
+    }
+
+    // إخفاء الشريط العائم بذكاء عندما يظهر زر الطلب الأصلي للاستمارة منعاً لتكرار الأزرار
+    if (submitBtn && stickyBarEl) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            stickyBarEl.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+            stickyBarEl.classList.remove('translate-y-0', 'opacity-100');
+          } else {
+            stickyBarEl.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+            stickyBarEl.classList.add('translate-y-0', 'opacity-100');
+          }
+        });
+      }, { threshold: 0.15 });
+      observer.observe(submitBtn);
+    }
   </script>
 
 </body>
