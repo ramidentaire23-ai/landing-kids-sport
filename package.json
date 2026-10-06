@@ -1,0 +1,14 @@
+{
+  "name": "landing-kids-sport-optics",
+  "version": "1.0.0",
+  "description": "Landing page e-commerce haute conversion - Lunettes de sport pour enfants adaptables chez l'opticien",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}

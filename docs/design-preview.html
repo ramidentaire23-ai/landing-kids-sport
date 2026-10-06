@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System & Preview - Lunettes de Sport Kids</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cabinet+Grotesk:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #1E3A8A;
+      --color-primary-light: #3B82F6;
+      --color-accent: #EA580C;
+      --color-accent-hover: #C2410C;
+      --color-optic: #0284C7;
+      --color-optic-bg: #E0F2FE;
+      --color-bg: #F8FAFC;
+      --color-surface: #FFFFFF;
+      --color-text-main: #0F172A;
+      --color-text-muted: #64748B;
+      --color-border: #E2E8F0;
+      --color-success: #16A34A;
+      --color-success-bg: #DCFCE7;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --font-display: 'Cabinet Grotesk', -apple-system, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background-color: var(--color-bg);
+      color: var(--color-text-main);
+      line-height: 1.5;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-primary);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    /* SPECIMEN */
+    .specimen-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .hero-type {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+    .body-type {
+      font-size: 16px;
+      color: var(--color-text-muted);
+      margin-bottom: 16px;
+    }
+    .data-pill {
+      font-variant-numeric: tabular-nums;
+      font-weight: 800;
+      font-size: 24px;
+      color: var(--color-accent);
+    }
+
+    /* PALETTE */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+    }
+    .color-swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+    .swatch-fill { height: 60px; width: 100%; }
+    .swatch-info { padding: 8px; font-size: 12px; font-weight: 600; }
+    .swatch-info span { display: block; font-weight: 400; color: var(--color-text-muted); }
+
+    /* MOCKUP E-COMMERCE HERO */
+    .preview-mockup {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      border: 2px solid #CBD5E1;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    .top-announcement {
+      background: var(--color-primary);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mockup-content {
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .optic-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-optic-bg);
+      color: var(--color-optic);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      width: fit-content;
+      border: 1px solid rgba(2, 132, 199, 0.2);
+    }
+
+    .mockup-headline {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--color-text-main);
+      line-height: 1.2;
+    }
+
+    .mockup-headline span {
+      color: var(--color-accent);
+    }
+
+    .feature-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .feature-tag {
+      background: #F1F5F9;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .product-box {
+      background: #F8FAFC;
+      border: 2px dashed #CBD5E1;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .product-badge-age {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--color-primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+    }
+
+    .price-container {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .current-price {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--color-accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .variant-selector {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .variant-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--color-border);
+      background: white;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .variant-btn.active {
+      border-color: var(--color-primary);
+      background: #EFF6FF;
+      color: var(--color-primary);
+    }
+
+    .cta-button {
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-size: 18px;
+      font-weight: 800;
+      width: 100%;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      box-shadow: 0 8px 16px -4px rgba(234, 88, 12, 0.4);
+      transition: transform 0.15s ease;
+    }
+
+    .trust-footer {
+      display: flex;
+      justify-content: space-around;
+      padding-top: 16px;
+      border-top: 1px solid var(--color-border);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div>
+      <h1 style="font-family: var(--font-display); font-size: 24px; color: var(--color-primary);">Design System & Preview Interactif</h1>
+      <p style="color: var(--color-text-muted); font-size: 14px;">Lunettes de Sport Enfants (&lt; 12 ans) — Prêtes pour l'opticien</p>
+    </div>
+
+    <!-- SPECIMEN -->
+    <div class="specimen-card">
+      <div class="section-title">1. Typographie & Spécimen</div>
+      <div class="hero-type">Cabinet Grotesk: Protection Sport Pro</div>
+      <div class="body-type">Plus Jakarta Sans: Des verres remplaçables chez votre opticien habituel. L'enfant pratique son sport favori en toute sécurité avec sa propre correction optique.</div>
+      <div>Prix unitaire fixe: <span class="data-pill">2 900 DA</span></div>
+    </div>
+
+    <!-- PALETTE -->
+    <div class="specimen-card">
+      <div class="section-title">2. Palette de Couleurs</div>
+      <div class="palette-grid">
+        <div class="color-swatch">
+          <div class="swatch-fill" style="background: #1E3A8A;"></div>
+          <div class="swatch-info">Navy Pro<span>#1E3A8A (Confiance)</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-fill" style="background: #EA580C;"></div>
+          <div class="swatch-info">Sport Orange<span>#EA580C (CTA Achat)</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-fill" style="background: #0284C7;"></div>
+          <div class="swatch-info">Optic Blue<span>#0284C7 (Verres)</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-fill" style="background: #F8FAFC;"></div>
+          <div class="swatch-info">Fond Clair<span>#F8FAFC</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-fill" style="background: #16A34A;"></div>
+          <div class="swatch-info">Stock / Succès<span>#16A34A</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP REEL -->
+    <div>
+      <div class="section-title">3. Mockup de Conversion Mobile (Hero + Formulaire)</div>
+      <div class="preview-mockup">
+        
+        <div class="top-announcement">
+          <span>⚡ LIVRAISON 58 WILAYAS — NORD & OUEST EXPRESS</span>
+        </div>
+
+        <div class="mockup-content">
+          <div class="optic-badge">
+            👓 Verres Adaptables chez votre Opticien
+          </div>
+
+          <h2 class="mockup-headline">
+            Protégez les yeux de votre enfant pendant le sport, <span>avec sa propre vue !</span>
+          </h2>
+
+          <div class="feature-tag-list">
+            <div class="feature-tag">🛡️ Antichoc & Incassable</div>
+            <div class="feature-tag">👶 Moins de 12 ans</div>
+            <div class="feature-tag">⚽ Football, Vélo, Basket</div>
+          </div>
+
+          <div class="product-box">
+            <span class="product-badge-age">&lt; 12 ANS UNIQUEMENT</span>
+            <div style="font-size: 54px; margin: 10px 0;">🥽</div>
+            <p style="font-weight: 700; color: var(--color-primary);">Lunettes de Sport Haute Sécurité</p>
+            <p style="font-size: 13px; color: var(--color-text-muted);">Monture ergonomique avec sangle de maintien ajustable</p>
+          </div>
+
+          <div class="price-container">
+            <span class="current-price">2 900 DA</span>
+            <span style="font-size: 14px; color: var(--color-text-muted); font-weight: 600;">+ Frais de livraison</span>
+          </div>
+
+          <div>
+            <label style="font-size: 13px; font-weight: 700; color: var(--color-text-main); display: block; margin-bottom: 6px;">CHOISISSEZ LA COULEUR :</label>
+            <div class="variant-selector">
+              <button class="variant-btn active">
+                <span style="display:inline-block; width:14px; height:14px; background:#000; border-radius:50%;"></span>
+                Noir Sport
+              </button>
+              <button class="variant-btn">
+                <span style="display:inline-block; width:14px; height:14px; background:#E2E8F0; border:1px solid #94A3B8; border-radius:50%;"></span>
+                Transparent
+              </button>
+            </div>
+          </div>
+
+          <button class="cta-button">
+            COMMANDER MAINTENANT (PAIEMENT À LA LIVRAISON)
+          </button>
+
+          <div class="trust-footer">
+            <div>📦 Expédition Rapide</div>
+            <div>🤝 Paiement à Réception</div>
+            <div>✅ 100% Authentique</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
