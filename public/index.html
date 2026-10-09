@@ -45,6 +45,25 @@
     .price-num {
       font-variant-numeric: tabular-nums;
     }
+    @keyframes subtle-pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.02);
+      }
+    }
+    .sticky-pulse {
+      animation: subtle-pulse 3s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sticky-pulse {
+        animation: none !important;
+      }
+      html {
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 
   <!-- كود Meta Pixel للزيارات الأولية -->
@@ -78,105 +97,88 @@
 <body class="antialiased pb-28 md:pb-24 selection:bg-orange-500 selection:text-white">
 
   <!-- 1. شريط إشعار الشحن السريع في الأعلى -->
-  <header class="bg-brand-navy text-white text-xs md:text-sm font-bold py-2 px-4 text-center sticky top-0 z-50 shadow-md">
-    <div class="max-w-xl mx-auto flex items-center justify-center gap-2">
-      <span>⚡</span>
+  <header class="bg-brand-navy text-white text-xs sm:text-sm font-extrabold py-2.5 px-4 text-center sticky top-0 z-50 shadow-sm border-b border-blue-900/50">
+    <div class="max-w-xl mx-auto flex items-center justify-center gap-2 tracking-wide">
+      <span class="text-amber-400">⚡</span>
       <span>توصيل لكافة الـ 58 ولاية عبر Nord & Ouest Express — الدفع عند الاستلام</span>
     </div>
   </header>
 
-  <main class="max-w-xl mx-auto px-4 pt-3 space-y-4">
+  <main class="max-w-xl mx-auto px-4 pt-3.5 space-y-4 sm:space-y-5">
 
-    <!-- 2. رؤية المنتج وفهم العرض الفوري (< 3 ثوانٍ) -->
-    <section class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3.5">
+    <!-- 2. رؤية المنتج والعرض القوي المباشر -->
+    <section class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 shadow-sm space-y-4">
       
-      <!-- الميزة الجوهرية المؤكدة -->
-      <div class="inline-flex items-center gap-2 bg-brand-opticBg text-brand-optic px-3.5 py-1.5 rounded-full text-xs font-black border border-sky-200">
-        <span>👓</span>
-        <span>العدسات قابلة للتغيير عند أي أخصائي بصريات (Opticien)</span>
+      <!-- العنوان الرئيسي المباشر والمركزي -->
+      <div class="space-y-2 text-center">
+        <h1 class="text-2xl sm:text-3xl font-black text-brand-navy leading-snug sm:leading-tight text-center max-w-lg mx-auto">
+          نظارات رياضية لطفلك… <span class="text-brand-orange">باش يلعب براحة وثقة! ⚽</span>
+        </h1>
+        
+        <!-- إشارة السعر والدفع عند الاستلام -->
+        <div class="pt-1">
+          <span class="inline-flex items-center gap-2 bg-slate-100/90 text-slate-800 text-xs sm:text-sm font-extrabold px-4 py-1.5 rounded-full border border-slate-200/80 shadow-2xs">
+            <span>السعر: <strong class="text-brand-navy price-num">2900 دج</strong></span>
+            <span class="text-slate-400">·</span>
+            <span class="text-emerald-700">الدفع عند الاستلام</span>
+          </span>
+        </div>
       </div>
 
-      <!-- العنوان الرئيسي المباشر -->
-      <h1 class="text-2xl font-black text-brand-navy leading-snug">
-        نظارات رياضية للأطفال (<span class="text-brand-orange">أقل من 12 سنة</span>)، مع إمكانية تركيب قياس النظر الخاص بطفلك.
-      </h1>
-
-      <p class="text-slate-600 text-xs md:text-sm leading-relaxed">
-        مصممة خصيصاً لممارسة كرة القدم، الدراجة والأنشطة الرياضية بأمان. يستطيع أخصائي البصريات (Opticien) فك العدسات الأصلية وتركيب عدسات تصحيح النظر الخاصة بطفلك لممارسة رياضته بكل وضوح وثقة.
-      </p>
-
       <!-- صورة المنتج الحقيقية مع تبديل الألوان الفوري -->
-      <div class="relative bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 text-center">
-        <span class="absolute top-3 left-3 bg-brand-navy text-white text-[11px] font-black px-2.5 py-1 rounded-full z-10">
-          مقاس الأطفال &lt; 12 سنة
-        </span>
-
+      <div class="relative bg-slate-50/70 border border-slate-200/80 rounded-2xl p-4 sm:p-5 text-center">
         <!-- حاوية الصورة الحقيقية مع تأثير انتقال ناعم -->
-        <div class="py-2 flex flex-col items-center justify-center">
-          <div class="w-full h-56 md:h-64 flex items-center justify-center p-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <img id="mainProductImage" src="/images/lunettes-noir.jpg" alt="نظارات رياضية للأطفال" class="max-h-full max-w-full object-contain transition-all duration-200">
+        <div class="flex flex-col items-center justify-center">
+          <div class="w-full h-56 sm:h-64 flex items-center justify-center p-3 bg-white rounded-2xl border border-slate-200/70 shadow-2xs overflow-hidden">
+            <img id="mainProductImage" src="/images/lunettes-noir.jpg" alt="نظارات رياضية للأطفال" class="max-h-full max-w-full object-contain transition-opacity duration-150">
           </div>
           
-          <!-- مؤشر اللون المعروض حالياً -->
-          <div class="mt-2.5 flex items-center gap-2">
-            <span class="text-xs font-bold text-slate-500">الصورة المعروضة :</span>
+          <!-- مؤشر اللون المعروض حالياً ومصغرات التبديل -->
+          <div class="mt-3 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            <span class="text-xs font-bold text-slate-500">اللون المحدد :</span>
             <span id="imageColorBadge" class="text-xs font-black bg-brand-navy text-white px-2.5 py-0.5 rounded-full">
               الأسود
             </span>
-          </div>
-
-          <!-- معاينات مصغرة سريعة للضغط والتبديل -->
-          <div class="flex gap-2.5 mt-2">
-            <button type="button" onclick="selectVariant('أسود')" class="thumb-btn active p-1 rounded-xl border-2 border-brand-navy bg-white shadow-sm flex items-center gap-1.5 px-2.5 py-1">
-              <img src="/images/lunettes-noir.jpg" class="w-8 h-8 object-contain rounded">
-              <span class="text-xs font-black text-brand-navy">أسود</span>
-            </button>
-            <button type="button" onclick="selectVariant('شفاف')" class="thumb-btn p-1 rounded-xl border-2 border-slate-200 bg-white shadow-sm flex items-center gap-1.5 px-2.5 py-1">
-              <img src="/images/lunettes-transparent.jpg" class="w-8 h-8 object-contain rounded">
-              <span class="text-xs font-black text-slate-700">شفاف</span>
-            </button>
+            <div class="flex gap-2 mr-2">
+              <button type="button" onclick="selectVariant('أسود')" class="thumb-btn active p-1 rounded-xl border-2 border-brand-navy bg-white shadow-2xs flex items-center gap-1.5 px-2.5 py-1 transition cursor-pointer">
+                <img src="/images/lunettes-noir.jpg" alt="أسود" class="w-7 h-7 object-contain rounded">
+                <span class="text-xs font-black text-brand-navy">أسود</span>
+              </button>
+              <button type="button" onclick="selectVariant('شفاف')" class="thumb-btn p-1 rounded-xl border-2 border-slate-200 bg-white shadow-2xs flex items-center gap-1.5 px-2.5 py-1 transition cursor-pointer">
+                <img src="/images/lunettes-transparent.jpg" alt="شفاف" class="w-7 h-7 object-contain rounded">
+                <span class="text-xs font-black text-slate-700">شفاف</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- 3 خصائص حقيقية -->
-        <div class="grid grid-cols-3 gap-2 pt-2.5 border-t border-slate-200 text-center">
-          <div class="bg-white p-2 rounded-xl border border-slate-200">
-            <div class="text-sm">🛡️</div>
-            <div class="text-[11px] font-bold text-slate-800 mt-0.5">مقاومة للرياضة</div>
+        <!-- 3 خصائص حقيقية مصممة بأناقة واحترافية -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-2.5 pt-3.5 mt-3.5 border-t border-slate-200/80 text-center">
+          <div class="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs">
+            <div class="text-base sm:text-lg">🛡️</div>
+            <div class="text-[11px] sm:text-xs font-bold text-slate-800 mt-1">مقاومة للصدمات</div>
           </div>
-          <div class="bg-white p-2 rounded-xl border border-slate-200">
-            <div class="text-sm">👁️</div>
-            <div class="text-[11px] font-bold text-slate-800 mt-0.5">تركيب عدسات نظر</div>
+          <div class="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs">
+            <div class="text-base sm:text-lg">👁️</div>
+            <div class="text-[11px] sm:text-xs font-bold text-slate-800 mt-1">تركيب عدسات نظر</div>
           </div>
-          <div class="bg-white p-2 rounded-xl border border-slate-200">
-            <div class="text-sm">⚽</div>
-            <div class="text-[11px] font-bold text-slate-800 mt-0.5">ثبات مع الجري</div>
+          <div class="bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-2xs">
+            <div class="text-base sm:text-lg">⚽</div>
+            <div class="text-[11px] sm:text-xs font-bold text-slate-800 mt-1">ثبات تام مع الجري</div>
           </div>
-        </div>
-      </div>
-
-      <!-- السعر الشفاف الثابت -->
-      <div class="flex items-center justify-between bg-orange-50 p-3.5 rounded-2xl border border-orange-200">
-        <div>
-          <span class="text-[11px] font-extrabold text-orange-950 block">السعر للوحدة :</span>
-          <span class="text-2xl font-black text-brand-orange price-num">2,900 دج</span>
-        </div>
-        <div class="text-left">
-          <span class="text-xs text-slate-500 font-bold block">منتج أصلي عالي الجودة</span>
-          <span class="text-xs font-extrabold text-slate-800">أقل من 12 سنة</span>
         </div>
       </div>
 
     </section>
 
-    <!-- 3. الوصول الفوري والمباشر لاستمارة الطلب (بدون أي تأخير أو حواجز) -->
-    <section id="commande-section" class="bg-white rounded-3xl p-5 border-2 border-brand-navy shadow-xl space-y-4">
+    <!-- 3. الوصول الفوري والمباشر لاستمارة الطلب -->
+    <section id="commande-section" class="scroll-mt-16 sm:scroll-mt-20 bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 shadow-sm sm:shadow-md space-y-4">
       
-      <div class="border-b border-slate-200 pb-2.5">
-        <div class="inline-block bg-orange-100 text-brand-orange text-xs font-black px-3 py-1 rounded-full mb-1">
+      <div class="border-b border-slate-200/80 pb-3 text-center sm:text-right">
+        <div class="inline-block bg-orange-50 text-brand-orange border border-orange-200/70 text-xs font-black px-3 py-1 rounded-full mb-1.5">
           استمارة الطلب المباشر
         </div>
-        <h2 class="text-xl font-black text-brand-navy">
+        <h2 class="text-xl sm:text-2xl font-black text-brand-navy">
           أدخل بياناتك لتجهيز شحنتك
         </h2>
         <p class="text-xs text-slate-500 mt-0.5">
@@ -446,16 +448,11 @@
 
   </main>
 
-  <!-- شريط الطلب العائم الثابت أسفل الشاشة (Sticky Order CTA) -->
-  <div id="stickyCtaBar" class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_25px_rgba(0,0,0,0.12)] py-2.5 px-4 transition-all duration-300 transform translate-y-0">
-    <div class="max-w-xl mx-auto flex items-center justify-between gap-3">
-      <div class="text-right">
-        <span class="text-[10px] md:text-[11px] font-extrabold text-slate-500 block leading-tight">المبلغ الإجمالي :</span>
-        <span id="stickyBarPrice" class="text-lg md:text-xl font-black text-brand-orange price-num leading-tight">2,900 دج</span>
-      </div>
-      <button type="button" id="stickyCtaBtn" class="flex-1 bg-brand-orange hover:bg-brand-orangeHover text-white py-3 px-5 rounded-2xl shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 transition active:scale-95">
-        <span class="text-lg md:text-xl font-black tracking-wide">أطلب الآن</span>
-        <span class="text-[11px] font-bold text-orange-100 hidden sm:inline">— الدفع عند الاستلام ⚡</span>
+  <!-- شريط الطلب العائم الثابت أسفل الشاشة للموبايل (Sticky Mobile CTA) -->
+  <div id="stickyCtaBar" class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] py-2.5 px-4 transition-all duration-300 transform translate-y-0">
+    <div class="max-w-xl mx-auto">
+      <button type="button" id="stickyCtaBtn" class="sticky-pulse w-full bg-brand-orange hover:bg-brand-orangeHover text-white py-3.5 px-6 rounded-2xl shadow-md shadow-orange-500/20 flex items-center justify-center gap-2 transition active:scale-98 cursor-pointer">
+        <span class="text-base sm:text-lg font-black tracking-wide">⚡ اطلب الآن — <span class="price-num">2900</span> دج</span>
       </button>
     </div>
   </div>
@@ -859,36 +856,48 @@
     });
 
     // 9. تفاعل زر وشريط الطلب العائم الثابت (Sticky CTA Bar)
-    const stickyCtaBtn = document.getElementById('stickyCtaBtn');
-    const stickyBarEl = document.getElementById('stickyCtaBar');
-
-    if (stickyCtaBtn) {
-      stickyCtaBtn.addEventListener('click', () => {
-        const formSection = document.getElementById('commande-section');
-        if (formSection) {
-          formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setTimeout(() => {
-            const firstEmptyInput = document.getElementById('client') || document.getElementById('phone');
-            if (firstEmptyInput) firstEmptyInput.focus();
-          }, 350);
-        }
-      });
+    function scrollToOrderForm() {
+      const formSection = document.getElementById('commande-section');
+      if (formSection) {
+        formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          const firstEmptyInput = document.getElementById('client') || document.getElementById('phone');
+          if (firstEmptyInput && document.activeElement !== firstEmptyInput) {
+            firstEmptyInput.focus({ preventScroll: true });
+          }
+        }, 450);
+      }
     }
 
-    // إخفاء الشريط العائم بذكاء عندما يظهر زر الطلب الأصلي للاستمارة منعاً لتكرار الأزرار
-    if (submitBtn && stickyBarEl) {
+    const stickyCtaBtn = document.getElementById('stickyCtaBtn');
+    const stickyBarEl = document.getElementById('stickyCtaBar');
+    const formSection = document.getElementById('commande-section');
+
+    if (stickyCtaBtn) {
+      stickyCtaBtn.addEventListener('click', scrollToOrderForm);
+    }
+
+    // إخفاء الشريط العائم بذكاء عندما يصل الزائر إلى استمارة الطلب منعاً للتداخل وتغطية الحقول
+    if (formSection && stickyBarEl) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             stickyBarEl.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
             stickyBarEl.classList.remove('translate-y-0', 'opacity-100');
           } else {
-            stickyBarEl.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
-            stickyBarEl.classList.add('translate-y-0', 'opacity-100');
+            const rect = formSection.getBoundingClientRect();
+            // Si l'utilisateur est au-dessus du formulaire, réafficher le bouton sticky
+            if (rect.top > (window.innerHeight || document.documentElement.clientHeight)) {
+              stickyBarEl.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+              stickyBarEl.classList.add('translate-y-0', 'opacity-100');
+            } else {
+              stickyBarEl.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+              stickyBarEl.classList.remove('translate-y-0', 'opacity-100');
+            }
           }
         });
-      }, { threshold: 0.15 });
-      observer.observe(submitBtn);
+      }, { threshold: 0.08 });
+      observer.observe(formSection);
     }
   </script>
 
