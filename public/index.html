@@ -38,6 +38,7 @@
       background-color: #F8FAFC;
       color: #0F172A;
       overflow-x: clip;
+      padding-bottom: max(6.5rem, calc(5.5rem + env(safe-area-inset-bottom, 0px)));
     }
     input, select, button {
       font-family: 'Cairo', sans-serif;
@@ -45,19 +46,53 @@
     .price-num {
       font-variant-numeric: tabular-nums;
     }
-    @keyframes subtle-pulse {
+
+    /* هوامش الأمان للنماذج لمنع أي تغطية بالحقول أو الزر النهائي */
+    #commande-section {
+      scroll-margin-top: 4.5rem;
+      scroll-margin-bottom: 6rem;
+    }
+    #commande-section input,
+    #commande-section select,
+    #submitOrderBtn {
+      scroll-margin-bottom: 6rem;
+    }
+    #stickyCtaBar {
+      padding-bottom: max(0.625rem, calc(0.5rem + env(safe-area-inset-bottom, 0px)));
+    }
+
+    /* اهتزاز دوري خفيف وأنيق كل 4 إلى 5 ثوانٍ يليه توقف هادئ */
+    @keyframes subtle-vibrate {
       0%, 100% {
-        transform: scale(1);
+        transform: translateX(0);
       }
-      50% {
-        transform: scale(1.02);
+      1.5% {
+        transform: translateX(-3px);
+      }
+      3% {
+        transform: translateX(3px);
+      }
+      4.5% {
+        transform: translateX(-2.5px);
+      }
+      6% {
+        transform: translateX(2px);
+      }
+      7.5% {
+        transform: translateX(-1px);
+      }
+      9% {
+        transform: translateX(1px);
+      }
+      10% {
+        transform: translateX(0);
       }
     }
-    .sticky-pulse {
-      animation: subtle-pulse 3s ease-in-out infinite;
+    .sticky-vibrate {
+      animation: subtle-vibrate 4.5s ease-in-out infinite;
     }
     @media (prefers-reduced-motion: reduce) {
-      .sticky-pulse {
+      .sticky-vibrate {
         animation: none !important;
       }
       html {
@@ -448,10 +483,10 @@
 
   </main>
 
-  <!-- شريط الطلب العائم الثابت أسفل الشاشة للموبايل (Sticky Mobile CTA) -->
-  <div id="stickyCtaBar" class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] py-2.5 px-4 transition-all duration-300 transform translate-y-0">
-    <div class="max-w-xl mx-auto">
-      <button type="button" id="stickyCtaBtn" class="sticky-pulse w-full bg-brand-orange hover:bg-brand-orangeHover text-white py-3.5 px-6 rounded-2xl shadow-md shadow-orange-500/20 flex items-center justify-center gap-2 transition active:scale-98 cursor-pointer">
+  <!-- شريط الطلب العائم الدائم في أسفل الشاشة (Sticky Permanent CTA) -->
+  <div id="stickyCtaBar" class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_25px_rgba(0,0,0,0.08)] py-2.5 sm:py-3 px-4 transition-all duration-300">
+    <div class="max-w-md sm:max-w-lg mx-auto">
+      <button type="button" id="stickyCtaBtn" class="sticky-vibrate w-full bg-brand-orange hover:bg-brand-orangeHover text-white py-3.5 sm:py-4 px-6 rounded-2xl shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 transition active:scale-[0.98] cursor-pointer border border-orange-400/30">
         <span class="text-base sm:text-lg font-black tracking-wide">⚡ اطلب الآن — <span class="price-num">2900</span> دج</span>
       </button>
     </div>
@@ -855,17 +890,20 @@
       }
     });
 
-    // 9. تفاعل زر وشريط الطلب العائم الثابت (Sticky CTA Bar)
+    // 9. تفاعل زر وشريط الطلب العائم الدائم (Permanent Sticky CTA)
     function scrollToOrderForm() {
       const formSection = document.getElementById('commande-section');
       if (formSection) {
         formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(() => {
-          const firstEmptyInput = document.getElementById('client') || document.getElementById('phone');
-          if (firstEmptyInput && document.activeElement !== firstEmptyInput) {
-            firstEmptyInput.focus({ preventScroll: true });
+          const clientInput = document.getElementById('client');
+          const phoneInput = document.getElementById('phone');
+          if (clientInput && !clientInput.value.trim()) {
+            clientInput.focus({ preventScroll: true });
+          } else if (phoneInput && !phoneInput.value.trim()) {
+            phoneInput.focus({ preventScroll: true });
           }
-        }, 450);
+        }, 400);
       }
     }
 
@@ -877,27 +915,16 @@
       stickyCtaBtn.addEventListener('click', scrollToOrderForm);
     }
 
-    // إخفاء الشريط العائم بذكاء عندما يصل الزائر إلى استمارة الطلب منعاً للتداخل وتغطية الحقول
+    // لضمان راحة المستخدم وعدم حجب الحقول أثناء إدخال البيانات على الهواتف
     if (formSection && stickyBarEl) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            stickyBarEl.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
-            stickyBarEl.classList.remove('translate-y-0', 'opacity-100');
-          } else {
-            const rect = formSection.getBoundingClientRect();
-            // Si l'utilisateur est au-dessus du formulaire, réafficher le bouton sticky
-            if (rect.top > (window.innerHeight || document.documentElement.clientHeight)) {
-              stickyBarEl.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
-              stickyBarEl.classList.add('translate-y-0', 'opacity-100');
-            } else {
-              stickyBarEl.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
-              stickyBarEl.classList.remove('translate-y-0', 'opacity-100');
-            }
-          }
-        });
-      }, { threshold: 0.08 });
-      observer.observe(formSection);
+      formSection.addEventListener('focusin', (e) => {
+        if (e.target.matches('input, select, textarea')) {
+          stickyBarEl.classList.add('opacity-90', 'shadow-sm');
+        }
+      });
+      formSection.addEventListener('focusout', () => {
+        stickyBarEl.classList.remove('opacity-90', 'shadow-sm');
+      });
     }
   </script>
 
