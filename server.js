@@ -24,8 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuration NOEST
 const NOEST_BASE_URL = process.env.NOEST_BASE_URL || 'https://app.noest-dz.com';
-const NOEST_API_TOKEN = process.env.NOEST_API_TOKEN || 'JlLZKsPRF6eClTd4v2NaDfS60JZLbgxtWfd';
-const NOEST_USER_GUID = process.env.NOEST_USER_GUID || 'UHGCDOGE';
+const NOEST_API_TOKEN = process.env.NOEST_API_TOKEN || 'YTuyRHVZKi4ppK61PmcluLdQMHy2mPvecBU';
+const NOEST_USER_GUID = process.env.NOEST_USER_GUID || 'YCZOTQPX';
 
 const crypto = require('crypto');
 
@@ -436,7 +436,17 @@ app.post('/api/order', async (req, res) => {
     if (!createRes.ok || !createData.success) {
       console.error('[NOEST API] Échec création:', createData);
       let errorMsg = 'تعذر تسجيل الطلب لدى شركة التوصيل، يرجى التأكد من المعلومات والمحاولة مجدداً.';
-      if (createData.message) errorMsg = createData.message;
+      if (createData.message) {
+        errorMsg = createData.message;
+      }
+      if (createData.errors) {
+        if (createData.errors.account_suspended) {
+          errorMsg = 'حساب الشحن معلق أو في انتظار التفعيل لدى شركة التوصيل (Compte suspendu). يرجى التواصل مع مسؤول حسابكم لتنشيطه.';
+        } else if (typeof createData.errors === 'object') {
+          const errList = Object.values(createData.errors).flat();
+          if (errList.length > 0) errorMsg = errList.join(' - ');
+        }
+      }
       return res.status(422).json({
         success: false,
         message: errorMsg,
