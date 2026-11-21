@@ -24,8 +24,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuration NOEST
 const NOEST_BASE_URL = process.env.NOEST_BASE_URL || 'https://app.noest-dz.com';
-const NOEST_API_TOKEN = process.env.NOEST_API_TOKEN || 'YTuyRHVZKi4ppK61PmcluLdQMHy2mPvecBU';
-const NOEST_USER_GUID = process.env.NOEST_USER_GUID || 'YCZOTQPX';
+const NOEST_API_TOKEN = (process.env.NOEST_API_TOKEN && process.env.NOEST_API_TOKEN !== 'JlLZKsPRF6eClTd4v2NaDfS60JZLbgxtWfd')
+  ? process.env.NOEST_API_TOKEN
+  : 'YTuyRHVZKi4ppK61PmcluLdQMHy2mPvecBU';
+const NOEST_USER_GUID = (process.env.NOEST_USER_GUID && process.env.NOEST_USER_GUID !== 'UHGCDOGE')
+  ? process.env.NOEST_USER_GUID
+  : 'YCZOTQPX';
 
 const crypto = require('crypto');
 
